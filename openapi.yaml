@@ -1,0 +1,218 @@
+openapi: 3.0.3
+info:
+  title: API приёма заявок медресе «Аль Бушра»
+  version: 1.0.0
+  description: |
+    API принимает заявки с сайта медресе. Передавайте данные только по HTTPS.
+    API не предназначен для публичного чтения персональных данных.
+servers:
+  - url: https://your-domain.example
+    description: Production
+  - url: http://localhost:3000
+    description: Локальная разработка
+paths:
+  /health:
+    get:
+      tags: [Статус]
+      summary: Проверка состояния сервера
+      operationId: getHealth
+      description: Простой endpoint для проверки, что сервер работает.
+      responses:
+        '200':
+          description: Сервер работает нормально.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+              example:
+                status: ok
+                timestamp: '2026-08-14T12:00:00Z'
+  /api/applications:
+    post:
+      tags: [Заявки]
+      summary: Отправить новую заявку на обучение
+      operationId: createApplication
+      description: |
+        Создание новой заявки. Данные будут отправлены в защищённый приёмник.
+        
+        **Ограничения:**
+        - Максимум 5 заявок с одного IP-адреса за 15 минут
+        - Антиспам-поле должно оставаться пустым
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationRequest'
+            example:
+              studentName: Алия Исаева
+              birthDate: '2015-05-01'
+              guardianName: Мария Исаева
+              phone: '+996 555 123 456'
+              program: Изучение Корана
+              comment: Просим позвонить после 18:00.
+              consent: true
+      responses:
+        '201':
+          description: Заявка успешно принята и передана в защищённый приёмник.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              example:
+                message: Заявка принята.
+        '400':
+          description: Некорректные или неполные данные. Проверьте все обязательные поля.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Заполните все обязательные поля.
+        '429':
+          description: Превышен лимит запросов (не более 5 за 15 минут с одного IP-адреса).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Слишком много запросов. Попробуйте позже.
+        '503':
+          description: Защищённый приёмник заявок временно недоступен.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Сервер недоступен. Попробуйте позже.
+    get:
+      tags: [Заявки]
+      summary: Получить статистику по заявкам
+      operationId: getApplicationsStats
+      description: Возвращает информацию о количестве поступивших заявок.
+      responses:
+        '200':
+          description: Статистика по заявкам.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationsStatsResponse'
+              example:
+                total: 42
+                lastUpdate: '2026-08-14T12:00:00Z'
+  /api/openapi.yaml:
+    get:
+      tags: [Документация]
+      summary: Скачать спецификацию OpenAPI в формате YAML
+      operationId: getOpenApiSpecification
+      description: Получить полную спецификацию API в формате OpenAPI 3.0.3.
+      responses:
+        '200':
+          description: Спецификация в формате YAML.
+          content:
+            application/yaml:
+              schema:
+                type: string
+  /swagger:
+    get:
+      tags: [Документация]
+      summary: Открыть интерактивную документацию API
+      operationId: getSwaggerUI
+      description: Интерфейс Swagger UI для тестирования и просмотра API.
+      responses:
+        '200':
+          description: HTML-страница с Swagger UI.
+          content:
+            text/html:
+              schema:
+                type: string
+components:
+  schemas:
+    ApplicationRequest:
+      type: object
+      additionalProperties: false
+      required: [studentName, birthDate, guardianName, phone, program, consent]
+      properties:
+        studentName:
+          type: string
+          maxLength: 120
+          description: ФИО ученика. Обязательное поле.
+          example: Алия Исаева
+        birthDate:
+          type: string
+          format: date
+          description: Дата рождения в формате YYYY-MM-DD. Обязательное поле.
+          example: '2015-05-01'
+        guardianName:
+          type: string
+          maxLength: 120
+          description: Имя родителя или опекуна. Обязательное поле.
+          example: Мария Исаева
+        phone:
+          type: string
+          minLength: 7
+          maxLength: 30
+          description: Контактный телефон; должен содержать не менее 7 цифр. Обязательное поле.
+          example: '+996 555 123 456'
+        program:
+          type: string
+          enum: [Начальный уровень, Основная программа, Изучение Корана, Арабский язык]
+          description: Выбранная программа обучения. Обязательное поле.
+          example: Изучение Корана
+        comment:
+          type: string
+          maxLength: 1000
+          description: Дополнительный комментарий (необязательное поле).
+          example: Просим позвонить после 18:00.
+        consent:
+          type: boolean
+          description: Подтверждение согласия на обработку персональных данных. Обязательное поле.
+          example: true
+        website:
+          type: string
+          maxLength: 100
+          description: Антиспам-поле; всегда оставляйте пустым.
+          writeOnly: true
+    SuccessResponse:
+      type: object
+      required: [message]
+      properties:
+        message:
+          type: string
+          example: Заявка принята.
+          description: Сообщение об успешной обработке.
+    ErrorResponse:
+      type: object
+      required: [message]
+      properties:
+        message:
+          type: string
+          example: Заполните все обязательные поля.
+          description: Описание ошибки.
+    HealthResponse:
+      type: object
+      required: [status, timestamp]
+      properties:
+        status:
+          type: string
+          enum: [ok, error]
+          description: Статус сервера.
+          example: ok
+        timestamp:
+          type: string
+          format: date-time
+          description: Время проверки статуса.
+          example: '2026-08-14T12:00:00Z'
+    ApplicationsStatsResponse:
+      type: object
+      required: [total, lastUpdate]
+      properties:
+        total:
+          type: integer
+          description: Общее количество поступивших заявок.
+          example: 42
+        lastUpdate:
+          type: string
+          format: date-time
+          description: Время последнего обновления статистики.
+          example: '2026-08-14T12:00:00Z'

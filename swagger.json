@@ -1,0 +1,60 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API приёма заявок медресе «Аль Бушра»",
+    "version": "1.0.0",
+    "description": "API принимает заявки с сайта медресе. Передавайте данные только по HTTPS. API не предназначен для публичного чтения персональных данных."
+  },
+  "servers": [
+    { "url": "https://your-domain.example", "description": "Production" },
+    { "url": "http://localhost:3000", "description": "Локальная разработка" }
+  ],
+  "paths": {
+    "/api/applications": {
+      "post": {
+        "tags": ["Заявки"],
+        "summary": "Отправить заявку на обучение",
+        "operationId": "createApplication",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ApplicationRequest" },
+              "example": { "studentName": "Алия Исаева", "birthDate": "2015-05-01", "guardianName": "Мария Исаева", "phone": "+996 555 123 456", "program": "Изучение Корана", "comment": "Просим позвонить после 18:00.", "consent": true }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Заявка успешно принята и передана в защищённый приёмник.", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SuccessResponse" } } } },
+          "400": { "description": "Некорректные или неполные данные.", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } } } },
+          "429": { "description": "Превышен лимит запросов: не более 5 за 15 минут с одного IP.", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } } } },
+          "503": { "description": "Защищённый приёмник заявок временно недоступен.", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } } } }
+        }
+      }
+    },
+    "/api/openapi.yaml": {
+      "get": { "tags": ["Документация"], "summary": "Скачать OpenAPI-спецификацию", "operationId": "getOpenApiSpecification", "responses": { "200": { "description": "Спецификация в формате YAML." } } }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApplicationRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["studentName", "birthDate", "guardianName", "phone", "program", "consent"],
+        "properties": {
+          "studentName": { "type": "string", "maxLength": 120, "description": "ФИО ученика." },
+          "birthDate": { "type": "string", "format": "date", "description": "Дата рождения в формате YYYY-MM-DD." },
+          "guardianName": { "type": "string", "maxLength": 120, "description": "Имя родителя или опекуна." },
+          "phone": { "type": "string", "minLength": 7, "maxLength": 30, "description": "Контактный телефон; должен содержать не менее 7 цифр." },
+          "program": { "type": "string", "enum": ["Начальный уровень", "Основная программа", "Изучение Корана", "Арабский язык"] },
+          "comment": { "type": "string", "maxLength": 1000 },
+          "consent": { "type": "boolean", "description": "Согласие на обработку персональных данных." },
+          "website": { "type": "string", "maxLength": 100, "description": "Антиспам-поле; оставляйте пустым.", "writeOnly": true }
+        }
+      },
+      "SuccessResponse": { "type": "object", "required": ["message"], "properties": { "message": { "type": "string", "example": "Заявка принята." } } },
+      "ErrorResponse": { "type": "object", "required": ["message"], "properties": { "message": { "type": "string", "example": "Заполните все обязательные поля." } } }
+    }
+  }
+}
