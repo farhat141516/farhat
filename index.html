@@ -19,13 +19,14 @@
           <span>Аль Бушра<small>медресе</small></span>
         </a>
         <a class="nav-link" href="#why">О медресе</a>
+        <span class="admin-badge" aria-label="Админ-панель"><span aria-hidden="true">⚙</span> Admin</span>
         <a class="button button-small" href="#application">Подать заявку</a>
       </nav>
 
       <div class="hero-content container">
         <p class="eyebrow">Путь к знанию и нравственности</p>
         <h1>Место, где знания обретают <em>смысл</em></h1>
-        <p class="hero-copy">Берегежно сопровождаем учеников в изучении веры, Корана и арабского языка — в атмосфере уважения и заботы.</p>
+        <p class="hero-copy">Бережно сопровождаем учеников в изучении веры, Корана и арабского языка — в атмосфере уважения и заботы.</p>
         <a class="button" href="#application">Оставить заявку <span aria-hidden="true">↓</span></a>
       </div>
       <div class="hero-pattern" aria-hidden="true"></div>
@@ -38,10 +39,9 @@
           <h2 id="photo-title">Медресе «Аль Бушра»</h2>
           <p>Здесь будет размещена фотография здания или учебной жизни медресе — она поможет будущим ученикам и родителям почувствовать атмосферу нашего пространства.</p>
         </div>
-        <!-- Замените этот блок на: <img src="uploads/madrasa-photo.jpg" alt="Здание медресе Аль Бушра"> -->
-        <figure class="madrasa-photo-slot" aria-label="Место для фотографии медресе">
-          <span class="photo-arch" aria-hidden="true">⌂</span>
-          <figcaption>Фотография медресе<br><small>место для вашего снимка</small></figcaption>
+        <figure class="madrasa-photo-slot admin-visual" aria-label="Иллюстрация медресе">
+          <div class="visual-icon" aria-hidden="true">✦</div>
+          <figcaption>Свет знаний<br><small>мудрость, порядок и развитие</small></figcaption>
         </figure>
       </section>
 
@@ -91,7 +91,7 @@
               </div>
               <div class="field">
                 <label for="birth-date">Дата рождения <span aria-hidden="true">*</span></label>
-                <input id="birth-date" name="birthDate" type="date" required aria-describedby="birth-date-error" />
+                <input id="birth-date" name="birthDate" type="text" inputmode="numeric" placeholder="ГГГГ-ММ-ДД" required aria-describedby="birth-date-error" />
                 <p class="field-error" id="birth-date-error"></p>
               </div>
               <div class="field">
@@ -108,12 +108,10 @@
                 <label for="program">Программа обучения <span aria-hidden="true">*</span></label>
                 <select id="program" name="program" required aria-describedby="program-error">
                   <option value="">Выберите программу</option>
-                  
-                  
+                  <option>Начальный уровень</option>
+                  <option>Основная программа</option>
                   <option>Изучение Корана</option>
-                  <option>Изучение Ъильма</option>
-
-                  </option>
+                  <option>Арабский язык</option>
                 </select>
                 <p class="field-error" id="program-error"></p>
               </div>
