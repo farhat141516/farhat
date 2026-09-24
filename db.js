@@ -56,4 +56,25 @@ async function saveApplication(application) {
   return result.rows[0].id;
 }
 
-module.exports = { getPool, saveApplication };
+async function listApplications() {
+  const database = getPool();
+  if (!database) throw new Error("Database is not configured");
+  const result = await database.query(
+    `SELECT id, student_name AS "studentName", birth_date AS "birthDate", guardian_name AS "guardianName",
+      phone, program, comment, status, created_at AS "createdAt", reviewed_at AS "reviewedAt"
+     FROM applications ORDER BY created_at DESC`
+  );
+  return result.rows;
+}
+
+async function updateApplicationStatus(id, status) {
+  const database = getPool();
+  if (!database) throw new Error("Database is not configured");
+  const result = await database.query(
+    `UPDATE applications SET status = $1, reviewed_at = now() WHERE id = $2
+     RETURNING id, status, reviewed_at AS "reviewedAt"`, [status, id]
+  );
+  return result.rows[0] || null;
+}
+
+module.exports = { getPool, saveApplication, listApplications, updateApplicationStatus };

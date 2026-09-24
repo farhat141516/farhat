@@ -11,6 +11,8 @@ CREATE TABLE IF NOT EXISTS applications (
     'Арабский язык'
   )),
   comment VARCHAR(1000),
+  status VARCHAR(20) NOT NULL DEFAULT 'new' CHECK (status IN ('new', 'accepted', 'rejected')),
+  reviewed_at TIMESTAMPTZ,
   consent_given_at TIMESTAMPTZ NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );

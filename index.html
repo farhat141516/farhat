@@ -3,141 +3,48 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Подача заявки на обучение в медресе Аль Бушра." />
+    <meta name="description" content="Медресе Аль Бушра — путь к знанию и нравственности." />
     <title>Аль Бушра — медресе</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
+    <script src="/site-nav.js" defer></script>
   </head>
-  <body>
-    <a class="skip-link" href="#application">Перейти к форме</a>
+  <body class="home-page">
+    <a class="skip-link" href="#welcome">Перейти к содержанию</a>
     <header class="hero" id="top">
       <nav class="nav container" aria-label="Основная навигация">
-        <a class="brand" href="#top" aria-label="Аль Бушра — на главную">
+        <a class="brand" href="index.html" aria-label="Аль Бушра — на главную">
           <span class="brand-mark" aria-hidden="true">أ</span>
           <span>Аль Бушра<small>медресе</small></span>
         </a>
-        <a class="nav-link" href="#why">О медресе</a>
-        <span class="admin-badge" aria-label="Админ-панель"><span aria-hidden="true">⚙</span> Admin</span>
-        <a class="button button-small" href="#application">Подать заявку</a>
       </nav>
 
-      <div class="hero-content container">
-        <p class="eyebrow">Путь к знанию и нравственности</p>
-        <h1>Место, где знания обретают <em>смысл</em></h1>
-        <p class="hero-copy">Бережно сопровождаем учеников в изучении веры, Корана и арабского языка — в атмосфере уважения и заботы.</p>
-        <a class="button" href="#application">Оставить заявку <span aria-hidden="true">↓</span></a>
+      <div class="hero-page-links" aria-label="Разделы сайта">
+        <a class="nav-link" href="about.html"><span class="nav-icon-round" aria-hidden="true">☾</span> О медресе</a>
+        <a class="nav-link" href="teachers.html"><span class="nav-icon-round" aria-hidden="true">✦</span> Устазы</a>
+        <a class="nav-link" href="curriculum.html"><span class="nav-icon-round" aria-hidden="true">⌘</span> Учебный план</a>
       </div>
-      <div class="hero-pattern" aria-hidden="true"></div>
+
+      <main class="hero-content container" id="welcome">
+        <div class="hero-intro">
+          <p class="eyebrow">Путь к знанию и нравственности</p>
+          <h1>Место, где знания обретают <em>смысл</em></h1>
+          <p class="hero-copy">Бережно сопровождаем учеников в изучении веры, Корана и арабского языка — в атмосфере уважения и заботы.</p>
+          <a class="button hero-cta" href="apply.html">Подать заявку <span aria-hidden="true">→</span></a>
+        </div>
+      </main>
+      <div class="hero-pattern hero-pattern-one" aria-hidden="true"></div>
+      <div class="hero-pattern hero-pattern-two" aria-hidden="true"></div>
+      <div class="hero-ornament" aria-hidden="true"></div>
+      <div class="mosque-scene" aria-hidden="true">
+        <span class="moon"></span>
+        <span class="star star-one">✦</span><span class="star star-two">✦</span><span class="star star-three">✦</span>
+        <span class="minaret minaret-left"></span><span class="minaret minaret-right"></span>
+        <span class="mosque-building"></span><span class="mosque-dome"></span><span class="mosque-crescent">☾</span>
+      </div>
     </header>
 
-    <main>
-      <section class="photo-section container" aria-labelledby="photo-title">
-        <div class="photo-copy">
-          <p class="eyebrow">Наш дом знаний</p>
-          <h2 id="photo-title">Медресе «Аль Бушра»</h2>
-          <p>Здесь будет размещена фотография здания или учебной жизни медресе — она поможет будущим ученикам и родителям почувствовать атмосферу нашего пространства.</p>
-        </div>
-        <figure class="madrasa-photo-slot admin-visual" aria-label="Иллюстрация медресе">
-          <div class="visual-icon" aria-hidden="true">✦</div>
-          <figcaption>Свет знаний<br><small>мудрость, порядок и развитие</small></figcaption>
-        </figure>
-      </section>
-
-      <section class="benefits container" id="why" aria-labelledby="why-title">
-        <div class="section-heading">
-          <p class="eyebrow">Почему Аль Бушра</p>
-          <h2 id="why-title">С вниманием к каждому шагу</h2>
-        </div>
-        <div class="benefit-grid">
-          <article class="benefit-card">
-            <span class="icon" aria-hidden="true">✦</span>
-            <h3>Доброжелательная среда</h3>
-            <p>Безопасное и тёплое пространство, в котором легко учиться и задавать вопросы.</p>
-          </article>
-          <article class="benefit-card">
-            <span class="icon" aria-hidden="true">◒</span>
-            <h3>Духовное и академическое развитие</h3>
-            <p>Соединяем глубокое понимание традиции с системным, вдумчивым обучением.</p>
-          </article>
-          <article class="benefit-card">
-            <span class="icon" aria-hidden="true">⌁</span>
-            <h3>Индивидуальное внимание</h3>
-            <p>Учитываем темп, возраст и образовательный маршрут каждого ученика.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="application-section" id="application" aria-labelledby="application-title">
-        <div class="application-wrap container">
-          <div class="application-intro">
-            <p class="eyebrow">Приём заявок</p>
-            <h2 id="application-title">Начните путь в Аль Бушра</h2>
-            <p>Заполните форму — мы свяжемся с вами, чтобы рассказать о программе и ответить на вопросы.</p>
-            <div class="quote" aria-hidden="true">«Знание — свет, которым делятся»</div>
-          </div>
-
-          <form class="application-form" id="application-form" novalidate>
-            <div class="honeypot" aria-hidden="true">
-              <label for="website">Не заполняйте это поле</label>
-              <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
-            </div>
-            <div class="form-grid">
-              <div class="field full-width">
-                <label for="student-name">ФИО ученика <span aria-hidden="true">*</span></label>
-                <input id="student-name" name="studentName" type="text" autocomplete="name" required aria-describedby="student-name-error" />
-                <p class="field-error" id="student-name-error"></p>
-              </div>
-              <div class="field">
-                <label for="birth-date">Дата рождения <span aria-hidden="true">*</span></label>
-                <input id="birth-date" name="birthDate" type="text" inputmode="numeric" placeholder="ГГГГ-ММ-ДД" required aria-describedby="birth-date-error" />
-                <p class="field-error" id="birth-date-error"></p>
-              </div>
-              <div class="field">
-                <label for="guardian-name">Имя родителя / опекуна <span aria-hidden="true">*</span></label>
-                <input id="guardian-name" name="guardianName" type="text" autocomplete="name" required aria-describedby="guardian-name-error" />
-                <p class="field-error" id="guardian-name-error"></p>
-              </div>
-              <div class="field">
-                <label for="phone">Телефон <span aria-hidden="true">*</span></label>
-                <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+996 555 123 456" required aria-describedby="phone-error" />
-                <p class="field-error" id="phone-error"></p>
-              </div>
-              <div class="field">
-                <label for="program">Программа обучения <span aria-hidden="true">*</span></label>
-                <select id="program" name="program" required aria-describedby="program-error">
-                  <option value="">Выберите программу</option>
-                  <option>Начальный уровень</option>
-                  <option>Основная программа</option>
-                  <option>Изучение Корана</option>
-                  <option>Арабский язык</option>
-                </select>
-                <p class="field-error" id="program-error"></p>
-              </div>
-              <div class="field full-width">
-                <label for="comment">Комментарий <span class="optional">необязательно</span></label>
-                <textarea id="comment" name="comment" rows="3" placeholder="Например, удобное время для звонка"></textarea>
-              </div>
-            </div>
-            <div class="consent field">
-              <input id="consent" name="consent" type="checkbox" required aria-describedby="consent-error" />
-              <label for="consent">Я согласен(на) на обработку персональных данных для рассмотрения заявки. <span aria-hidden="true">*</span></label>
-            </div>
-            <p class="field-error" id="consent-error"></p>
-            <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
-            <button class="button submit-button" type="submit">Отправить заявку <span aria-hidden="true">→</span></button>
-            <p class="privacy-note">Данные передаются только защищённому серверу для рассмотрения заявки.</p>
-          </form>
-        </div>
-      </section>
-    </main>
-
-    <footer class="footer container">
-      <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">أ</span><span>Аль Бушра<small>медресе</small></span></a>
-      <p>С заботой о знаниях и будущем.</p>
-    </footer>
-    <script src="app.js"></script>
   </body>
 </html>
-
